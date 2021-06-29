@@ -1,0 +1,34 @@
+version: "3.2"
+services:
+  elasticsearch:
+    container_name: es-container
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    environment:
+      - xpack.security.enabled=false
+      - "discovery.type=single-node"
+    ports:
+      - 9200:9200
+      - 9300:9300
+  sql-server-db:
+    container_name: sql-server-db
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    ports:
+      - "1433:1433"
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "SA_PASSWORD=yourStrong(!)Password"
+      - "MSSQL_PID=Express"
+    ports:
+      - "1433:1433"
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+  rabbitmq:
+    image: 'rabbitmq:3'
+    ports:
+      - "5672:5672"
+  flask:
+    build: .
+    ports:
+      - "5000:5000"

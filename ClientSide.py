@@ -299,9 +299,9 @@ def main():
 #    logger.write_lo_log('**************** System started ...', 'INFO')
     logging.debug('**************** System started ...')
     x = '{ "debug":"**************** System started ..."}'
+    #put log in dictionary
     res = json.loads(x)
-    #filebeat logstash
-
+    #send log to elastic
     es = Elasticsearch([{'host': IpDockers, 'port': 9200}], http_auth=('elastic', 'changeme'))
     # use elastic/changeme according to db
     es.indices.create(index='startingsystem', ignore=400)
